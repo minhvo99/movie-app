@@ -1,12 +1,17 @@
 import ImageComponent from "@components/ImageComponent";
+import Loading from "@components/Loading";
 import RelatedMediaList from "@components/MediaDetail/RelatedMediaList";
+import useFetch from "@hooks/useFetch";
 import { GENDER_MAP } from "@libs/constant";
 
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const PeopleDetail = () => {
-  const peopleInfor = useLoaderData();
+  const { id } = useParams();
+  const { data: peopleInfor, loading } = useFetch({
+    url: `/person/${id}?append_to_response=combined_credits`,
+  });
 
   return (
     <div className="bg-black text-[1.2vw] text-white">
@@ -55,6 +60,7 @@ const PeopleDetail = () => {
           />
         </div>
       </div>
+      {loading && <Loading />}
     </div>
   );
 };
