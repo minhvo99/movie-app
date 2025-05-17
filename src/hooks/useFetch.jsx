@@ -5,30 +5,35 @@ const defaultHeader = {
   "Content-Type": "application/json;charset=utf-8",
   Accept: "application/json",
 };
-const useFetch = ({ url, method = "GET", header = {} }) => {
+const useFetch = (
+  { url, method = "GET", header = {} },
+  { enabled } = { enabled: true },
+) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch(`${import.meta.env.VITE_BASE_URL}${url}`, {
-      method,
-      headers: {
-        ...defaultHeader,
-        ...header,
-      },
-    })
-      .then(async (res) => {
-        const data = await res.json();
-        setData(data);
+    if (enabled) {
+      setIsLoading(true);
+      fetch(`${import.meta.env.VITE_BASE_URL}${url}`, {
+        method,
+        headers: {
+          ...defaultHeader,
+          ...header,
+        },
       })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [JSON.stringify(header), method, url]);
+        .then(async (res) => {
+          const data = await res.json();
+          setData(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [JSON.stringify(header), method, url, enabled]);
   return { data, isLoading };
 };
 

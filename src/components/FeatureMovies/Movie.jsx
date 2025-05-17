@@ -1,8 +1,11 @@
 import ImageComponent from "@components/ImageComponent";
+import { useModelContext } from "@context/ModelProvider";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
-const Movie = ({ movies }) => {
+const Movie = ({ movies, trailerVideoKey }) => {
+  const { openPopup } = useModelContext();
   return (
     <>
       <ImageComponent
@@ -25,12 +28,25 @@ const Movie = ({ movies }) => {
             <p>{movies?.overview}</p>
           </div>
           <div className="mt-4">
-            <button className="mr-2 cursor-pointer rounded bg-white px-4 py-2 text-[10px] text-black lg:text-lg">
+            <button
+              onClick={() => {
+                openPopup(
+                  <iframe
+                    className="aspect-video w-[50vw]"
+                    src={`https://www.youtube.com/embed/${trailerVideoKey}`}
+                    title="Trailer"
+                  ></iframe>,
+                );
+              }}
+              className="mr-2 cursor-pointer rounded bg-white px-4 py-2 text-[10px] text-black lg:text-lg"
+            >
               <FontAwesomeIcon icon={faPlay} /> Trailer
             </button>
-            <button className="cursor-pointer rounded bg-slate-300/35 px-4 py-2 text-[10px] lg:text-lg">
-              View Details
-            </button>
+            <Link to={`/movie/${movies?.id}`}>
+              <button className="cursor-pointer rounded bg-slate-300/35 px-4 py-2 text-[10px] lg:text-lg">
+                View Details
+              </button>
+            </Link>
           </div>
         </div>
       </div>

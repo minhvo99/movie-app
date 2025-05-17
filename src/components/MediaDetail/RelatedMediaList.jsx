@@ -13,9 +13,9 @@ const RelatedMediaList = ({ mediaList, isLoading }) => {
           {(mediaList || []).map((media) => (
             <MovieCard
               key={media.id}
-              title={media.title}
+              title={media.title || media.name}
               id={media.id}
-              releaseDate={media.release_date}
+              releaseDate={media?.release_date || media?.first_air_date}
               posterPath={media.poster_path}
               point={media.vote_average}
               mediaType={media.media_type}

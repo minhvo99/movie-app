@@ -7,7 +7,7 @@ const MovieCard = (props) => {
   const pointAverage = Math.round(point * 10);
   return (
     <Link
-      to={`/movie/${id}`}
+      to={mediaType === "tv" ? `/tv/${id}` : `/movie/${id}`}
       className="cursor-pointer rounded-lg border border-slate-800"
     >
       <div className="relative">
@@ -22,17 +22,6 @@ const MovieCard = (props) => {
           width={210}
           height={300}
         />
-        {/* <img
-          src={
-            posterPath
-              ? `https://image.tmdb.org/t/p/original${posterPath}`
-              : "/noImage.svg"
-          }
-          alt=""
-          className="w-full rounded-lg"
-          width={210}
-          height={300}
-        /> */}
         <div className="relative -top-[1.5vw] px-4">
           {mediaType !== "person" && (
             <CircularProgressBar point={pointAverage} />

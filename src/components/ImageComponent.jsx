@@ -7,18 +7,23 @@ const ImageComponent = ({ src, width, height, className }) => {
 
   useEffect(() => {
     const img = new Image();
+    if (!src) {
+      setCurrentSrc(`https://placehold.co/${width}x${height}?text=No Image`);
+      return;
+    }
     img.src = src;
     img.onload = () => {
       setCurrentSrc(src);
     };
+
     return () => {
       img.onload = null; // Clean up the onload event handler
     };
-  }, [src]);
+  }, [src, width, height]);
   return (
     <>
       <img
-        src={src}
+        src={currentSrc}
         alt=""
         className={currentSrc === src ? className : `${className} blur-md`}
         width={width}

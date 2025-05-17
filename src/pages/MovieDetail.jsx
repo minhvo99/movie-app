@@ -17,12 +17,46 @@ const MovieDetail = () => {
   });
   const relatedMedia = recommendReults?.results || [];
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  const certification = (
+    (movieInfor?.release_dates?.results || []).find(
+      (result) => result.iso_3166_1 === "US",
+    )?.release_dates || []
+  ).find((releaseDate) => releaseDate?.certification);
+
+  const crews = (movieInfor?.credits?.crew || [])
+    .filter((crew) =>
+      [
+        "Director",
+        "Writer",
+        "Screenplay",
+        "Producer",
+        "Production Design",
+      ].includes(crew.job),
+    )
+    .map((crew) => ({
+      id: crew.id,
+      name: crew.name,
+      job: crew.job,
+    }));
+
   return (
     <div>
-      <Banner mediaInfor={movieInfor} />
+      <Banner
+        title={movieInfor.title}
+        backdropPath={movieInfor.backdrop_path}
+        posterPath={movieInfor.poster_path}
+        certification={certification}
+        crews={crews}
+        releaseDate={movieInfor.release_date}
+        genres={movieInfor.genres}
+        point={movieInfor.vote_average}
+        overview={movieInfor.overview}
+        trailerVideoKey={
+          (movieInfor?.videos?.results || [])?.find(
+            (video) => video.type === "Trailer" && video.site === "YouTube",
+          )?.key
+        }
+      />
       <div className="bg-black text-[1.2vw] text-white">
         <div className="max-w-screen-cl mx-auto flex gap-6 bg-black px-6 py-10 sm:gap-8">
           <div className="flex-[2]">
@@ -37,6 +71,7 @@ const MovieDetail = () => {
           </div>
         </div>
       </div>
+      {isLoading && <Loading />}
     </div>
   );
 };
