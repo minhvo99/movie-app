@@ -9,7 +9,10 @@ const Movie = ({ movies, trailerVideoKey }) => {
   return (
     <>
       <ImageComponent
-        src={`https://image.tmdb.org/t/p/original${movies?.backdrop_path}`}
+        src={
+          movies?.backdrop_path &&
+          `https://image.tmdb.org/t/p/original${movies?.backdrop_path}`
+        }
         className="aspect-video w-full brightness-50"
         width={900}
         height={500}

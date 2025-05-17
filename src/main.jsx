@@ -28,6 +28,19 @@ const router = createBrowserRouter([
       {
         path: "/people/:id",
         element: <PeopleDetail />,
+        loader: async ({ params }) => {
+          const res = await fetch(
+            `https://api.themoviedb.org/3/person/${params.id}?append_to_response=combined_credits`,
+            {
+              headers: {
+                Authorization: `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
+                "Content-Type": "application/json;charset=utf-8",
+                Accept: "application/json",
+              },
+            },
+          );
+          return res;
+        },
       },
     ],
   },

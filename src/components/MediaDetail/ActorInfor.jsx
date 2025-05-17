@@ -9,7 +9,7 @@ const ActorInfor = ({ id, name, character, profilePath, episodeCount }) => {
       className="rounded-lg border border-slate-300 bg-black shadow-sm"
     >
       <ImageComponent
-        src={`https://image.tmdb.org/t/p/original${profilePath}`}
+        src={profilePath && `https://image.tmdb.org/t/p/original${profilePath}`}
         className="w-full rounded-lg"
         width={276}
         height={350}

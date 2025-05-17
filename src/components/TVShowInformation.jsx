@@ -33,7 +33,10 @@ const TVShowInformation = ({ tvInfor }) => {
             <ImageComponent
               className="mt-2"
               key={network.id}
-              src={`https:media.themoviedb.org/t/p/h30${network?.logo_path}`}
+              src={
+                network?.logo_path &&
+                `https:media.themoviedb.org/t/p/h30${network?.logo_path}`
+              }
             />
           ))}
         </p>

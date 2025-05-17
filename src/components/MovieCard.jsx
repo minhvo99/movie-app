@@ -5,9 +5,14 @@ import ImageComponent from "./ImageComponent";
 const MovieCard = (props) => {
   const { posterPath, title, releaseDate, point, mediaType, id } = props;
   const pointAverage = Math.round(point * 10);
+  const url = {
+    movie: `/movie/${id}`,
+    tv: `/tv/${id}`,
+    person: `/people/${id}`,
+  };
   return (
     <Link
-      to={mediaType === "tv" ? `/tv/${id}` : `/movie/${id}`}
+      to={`${url[mediaType]}`}
       className="cursor-pointer rounded-lg border border-slate-800"
     >
       <div className="relative">
@@ -17,7 +22,7 @@ const MovieCard = (props) => {
           </p>
         )}
         <ImageComponent
-          src={`https://image.tmdb.org/t/p/original${posterPath}`}
+          src={posterPath && `https://image.tmdb.org/t/p/original${posterPath}`}
           className="w-full rounded-lg"
           width={210}
           height={300}

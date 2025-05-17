@@ -25,7 +25,9 @@ const ImageComponent = ({ src, width, height, className }) => {
       <img
         src={currentSrc}
         alt=""
-        className={currentSrc === src ? className : `${className} blur-md`}
+        className={
+          currentSrc === src || !src ? className : `${className} blur-md`
+        }
         width={width}
         height={height}
       />
