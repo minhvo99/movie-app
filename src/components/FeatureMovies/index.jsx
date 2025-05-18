@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Movie from "./Movie";
 import PaginateIndicator from "./PaginateIndicator";
 import useFetch from "@hooks/useFetch";
-import Loading from "@components/Loading";
 
 const FeatureMovies = () => {
   const [activeMovieId, setActiveMovieId] = useState();
@@ -11,7 +10,7 @@ const FeatureMovies = () => {
     url: "/discover/movie?include_video=true&language=en-US&page=1&sort_by=popularity.desc",
   });
 
-  const { data: videoResponse, isLoading } = useFetch(
+  const { data: videoResponse } = useFetch(
     {
       url: `/movie/${activeMovieId}/videos`,
     },
@@ -45,7 +44,6 @@ const FeatureMovies = () => {
         activeMovieId={activeMovieId}
         setActiveMovieId={setActiveMovieId}
       />
-      {isLoading && <Loading />}
     </div>
   );
 };
